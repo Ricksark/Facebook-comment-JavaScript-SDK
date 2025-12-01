@@ -1,0 +1,48 @@
+
+
+Here is the extracted Facebook Commenting System code from the file, broken down into the three parts you need to make it work.
+
+Part 1: The JavaScript SDK
+Where to put it: Immediately after the opening <body> tag.
+
+code Xml
+<div id="fb-root"></div>
+<script>
+//<![CDATA[
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+//]]>
+</script>
+  
+Part 2: The Comment Box (The Visible Part)
+Where to put it: Inside the <b:includable id='post' var='post'> section, usually right before <div class='post-footer'>.
+
+1Note: This code includes a conditional check (<b:if>) so comments only appear on the actual article page, not on the homepage.
+code Xml
+
+<b:if cond='data:blog.pageType == "item"'>
+  <div class='fb-comments-wrapper'>
+    <div class="fb-comments" 
+         data-width="100%" 
+         data-num-posts="10" 
+         expr:data-href="data:post.url">
+    </div>
+  </div>
+</b:if>
+  
+Part 3: The CSS (Optional Styling)
+Where to put it: Inside your <b:skin><![CDATA[ ... ]]></b:skin> section or between <style> tags in the head.
+
+code CSS
+.fb-comments-wrapper {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  display: block;
+}
+  
